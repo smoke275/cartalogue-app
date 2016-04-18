@@ -1,0 +1,45 @@
+[
+	{
+		 "id": "1",
+		 "name": "amul bitter chocolate",
+		 "uri": "sbcjksb/hsd.jpg",
+		 "price": "100",
+		 "weight": ""
+	},
+	{
+		 "id": "2",
+		 "name": "amul mocha chocolate",
+		 "uri": "sbcjksb/hsd.jpg",
+		 "price": "100",
+		 "weight": ""
+	},
+	{
+		 "id": "3",
+		 "name": "amul milk chocolate",
+		 "uri": "sbcjksb/hsd.jpg",
+		 "price": "100",
+		 "weight": ""
+	},
+	{
+		 "id": "4",
+		 "name": "dairy milk silk",
+		 "uri": "sbcjksb/hsd.jpg",
+		 "price": "100",
+		 "weight": ""
+	},
+	{
+		 "id": "5",
+		 "name": "Bourneville dark chocolate",
+		 "uri": "sbcjksb/hsd.jpg",
+		 "price": "100",
+		 "weight": ""
+	},
+	{
+		 "id": "6",
+		 "name": "five star",
+		 "uri": "sbcjksb/hsd.jpg",
+		 "price": "100",
+		 "weight": ""
+	}
+	
+]

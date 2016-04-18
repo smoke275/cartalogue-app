@@ -1,0 +1,104 @@
+[
+	{
+		"id": "1",
+		"address": "picnic garden",
+		"contact": "1234",
+		"reg_no": "SH1",
+		"location": {
+		    "latitude": "22.529608",
+		    "longitude": "88.381677"
+		},
+		"item": {
+		    "id": "1",
+		    "name": "amul bitter chocolate",
+		    "uri": "sbcjksb/hsd.jpg",
+		    "price": "100",
+		    "weight": ""
+		}
+	},
+	{
+		"id": "2",
+		"address": "picnic garden",
+		"contact": "5678",
+		"reg_no": "SH2",
+		"location": {
+		    "latitude": "22.528746",
+		    "longitude": "88.377879"
+		},
+		"item": {
+		    "id": "1",
+		    "name": "amul bitter chocolate",
+		    "uri": "sbcjksb/hsd.jpg",
+		    "price": "100",
+		    "weight": ""
+		}
+	},
+	{
+		"id": "3",
+		"address": "kasba",
+		"contact": "9012",
+		"reg_no": "SH3",
+		"location": {
+		    "latitude": "22.520292",
+		    "longitude": "88.373103"
+		},
+		"item": {
+		    "id": "1",
+		    "name": "amul bitter chocolate",
+		    "uri": "sbcjksb/hsd.jpg",
+		    "price": "100",
+		    "weight": ""
+		}
+	},
+	{
+		"id": "4",
+		"address": "behala",
+		"contact": "3456",
+		"reg_no": "SH4",
+		"location": {
+		    "latitude": "22.475734",
+		    "longitude": "88.287077"
+		},
+		"item": {
+		    "id": "1",
+		    "name": "amul bitter chocolate",
+		    "uri": "sbcjksb/hsd.jpg",
+		    "price": "100",
+		    "weight": ""
+		}
+	},
+	{
+		"id": "5",
+		"address": "kasba",
+		"contact": "7890",
+		"reg_no": "SH5",
+		"location": {
+		    "latitude": "22.519348",
+		    "longitude": "88.374492"
+		},
+		"item": {
+		    "id": "1",
+		    "name": "amul bitter chocolate",
+		    "uri": "sbcjksb/hsd.jpg",
+		    "price": "100",
+		    "weight": ""
+		}
+	},
+	{
+		"id": "6",
+		"address": "ballygunge phari",
+		"contact": "1357",
+		"reg_no": "SH6",
+		"location": {
+		    "latitude": "22.527928",
+		    "longitude": "88.365931"
+		},
+		"item": {
+		    "id": "1",
+		    "name": "amul bitter chocolate",
+		    "uri": "sbcjksb/hsd.jpg",
+		    "price": "100",
+		    "weight": ""
+		}
+	}
+]

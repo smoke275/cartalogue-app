@@ -1,0 +1,12 @@
+<div id="map" ></div>
+<div class="fab-input" layout="row" >
+    <md-card flex="100" layout-padding>
+        <md-input-container md-no-float class="md-block">
+            <input ng-model="user.address2" placeholder="Search location">
+        </md-input-container>
+    </md-card>
+</div>
+
+<md-button class="md-fab md-primary fab-bottom-right" aria-label="Get current location" ng-click="goToCurrentLocation()">
+    <md-icon class="material-icons">my_location</md-icon>
+</md-button>

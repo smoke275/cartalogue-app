@@ -1,0 +1,49 @@
+#map {
+height: calc(100% - 64px);
+}
+md-list-item.md-primary, md-list-item.md-primary md-icon{
+    color:rgb(76,175,80)
+}
+md-icon{
+    margin:0px;
+}
+.no-margin{
+    margin:0 0 0 0;
+}
+.no-margin{
+    margin:0 0 0 0;
+}
+
+html{
+    background-color:#f2f2f2;
+}
+body{
+    background-color:#f2f2f2;
+    font-family: Roboto, sans-serif;
+    margin:0px;
+    padding:0px;
+}
+.cloak{
+    background-color:#f2f2f2;
+}
+
+.fab-input{
+    position: fixed;
+    top:64px;
+    width:100%;
+}
+.fab-input-bottom{
+    bottom:10px;
+    top:initial;
+}
+.fab-input md-input-container{
+    margin:0px;
+}
+.fab-input .md-errors-spacer{
+    min-height:0px;
+}
+.fab-bottom-right{
+    position:absolute;
+    bottom:100px;
+    right:10px;
+}
