@@ -2,8 +2,16 @@
 cartalogue.config(['$routeProvider',
 	function($routeProvider){
 		$routeProvider.
+		when('/directions/:lat/:lng',{
+			templateUrl: 'directions.html',
+			controller: 'DirectionsController'
+		}).
+		when('/store/:id',{
+			templateUrl: 'store.html',
+			controller: 'StoreController'
+		}).
 		when('/search/result',{
-			templateUrl: 'listing.html',
+			templateUrl: 'result.html',
 			controller: 'SearchResultController'
 		}).
 		when('/search/item',{

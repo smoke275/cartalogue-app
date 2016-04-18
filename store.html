@@ -1,0 +1,23 @@
+<md-card style="margin:0 0 0 0;" layout="column">
+<img src="http://lorempixel.com/600/400/" flex="40" class="md-card-image" alt="Store image">
+
+<md-card-content class="md-primary">
+<md-card-title >
+  <md-card-title-text>
+    <span class="md-headline">[[store.reg_no]]</span>
+    <h5 >[[store.address]]</h5>
+  </md-card-title-text>
+</md-card-title>
+
+</md-card-content>
+<md-card-actions layout="row" layout-align="center center">
+  <md-button layout="column" layout-align="center center" layout-wrap ng-click="master.triggerCall(store.contact)">
+        <md-icon class="material-icons" flex="100">call</md-icon><br/>
+      <span flex="100">Call</span>
+  </md-button>
+  <md-button layout="column" layout-align="center center" layout-wrap ng-click="master.navigateTo('/directions/'+store.location.lat+'/'+store.location.lng)">
+        <md-icon class="material-icons" flex="100">directions</md-icon><br/>
+      <span flex="100">Directions</span>
+  </md-button>
+</md-card-actions>
+</md-card>

@@ -5,8 +5,8 @@
 		"contact": "1234",
 		"reg_no": "SH1",
 		"location": {
-		    "latitude": "22.529608",
-		    "longitude": "88.381677"
+		    "lat": 22.529608,
+		    "lng": 88.381677
 		},
 		"item": {
 		    "id": "1",
@@ -22,8 +22,8 @@
 		"contact": "5678",
 		"reg_no": "SH2",
 		"location": {
-		    "latitude": "22.528746",
-		    "longitude": "88.377879"
+		    "lat": 22.528746,
+		    "lng": 88.377879
 		},
 		"item": {
 		    "id": "1",
@@ -39,8 +39,8 @@
 		"contact": "9012",
 		"reg_no": "SH3",
 		"location": {
-		    "latitude": "22.520292",
-		    "longitude": "88.373103"
+		    "lat": 22.520292,
+		    "lng": 88.373103
 		},
 		"item": {
 		    "id": "1",
@@ -56,8 +56,8 @@
 		"contact": "3456",
 		"reg_no": "SH4",
 		"location": {
-		    "latitude": "22.475734",
-		    "longitude": "88.287077"
+		    "lat": 22.475734,
+		    "lng": 88.287077
 		},
 		"item": {
 		    "id": "1",
@@ -73,8 +73,8 @@
 		"contact": "7890",
 		"reg_no": "SH5",
 		"location": {
-		    "latitude": "22.519348",
-		    "longitude": "88.374492"
+		    "lat": 22.519348,
+		    "lng": 88.374492
 		},
 		"item": {
 		    "id": "1",
@@ -90,8 +90,8 @@
 		"contact": "1357",
 		"reg_no": "SH6",
 		"location": {
-		    "latitude": "22.527928",
-		    "longitude": "88.365931"
+		    "lat": 22.527928,
+		    "lng": 88.365931
 		},
 		"item": {
 		    "id": "1",

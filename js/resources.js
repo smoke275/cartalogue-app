@@ -8,7 +8,7 @@ cartalogue.factory('Item', ['$resource',
   }]);
 cartalogue.factory('Store', ['$resource',
   function($resource){
-    return $resource(API_ROOT+'/store', {},
+    return $resource(API_ROOT+'store:id.json', {id:'@id'},
       {
         'update': {method:'post'},
       });

@@ -41,7 +41,7 @@
                      <md-divider></md-divider>
                     <md-content ng-cloak>
                         <md-list flex >
-                            <md-list-item ng-repeat="item in menu" ng-click="navigate(item)" ng-class="{'md-primary':item.active}">
+                            <md-list-item ng-repeat="item in menu" ng-click="master.navigateTo(item.route)" ng-class="{'md-primary':item.active}">
                               <md-icon class="material-icons md-avatar-icon" >[[item.icon]]</md-icon>
                               
                               <div class="md-list-item-text md-offset">

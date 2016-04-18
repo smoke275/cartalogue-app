@@ -1,0 +1,18 @@
+
+	{
+		"id": "1",
+		"address": "picnic garden",
+		"contact": "1234",
+		"reg_no": "SH1",
+		"location": {
+		    "lat": 22.529608,
+		    "lng": 88.381677
+		},
+		"item": {
+		    "id": "1",
+		    "name": "amul bitter chocolate",
+		    "uri": "sbcjksb/hsd.jpg",
+		    "price": "100",
+		    "weight": ""
+		}
+	}

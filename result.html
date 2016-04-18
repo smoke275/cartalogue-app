@@ -1,0 +1,24 @@
+<div id="map" flex="[[90-open_state]]" class="transition-slow">
+    
+</div>
+<md-content flex="[[open_state]]" class="transition-slow">
+<md-list >
+        <md-subheader class="md-no-sticky" >Search Results
+            <md-button ng-click="open_state=60-open_state" class="md-icon-button pull-right" style="margin-top: -10px;">
+                <md-icon class="material-icons md-toggle-icon transition-slow" ng-class="{'toggled':open_state==50}">keyboard_arrow_down</md-icon>
+            </md-button>
+        </md-subheader>
+        <md-list-item class="md-2-line" ng-repeat-start="store in master.stores" flex="100" ng-click="master.navigateTo('/store/'+store.id)">
+          <img ng-src="http://lorempixel.com/50/100" class="md-avatar" alt="[[store.name]]" />
+          <div class="md-list-item-text" layout="column">
+            <!--<h3>[[store.reg_no]]</h3>-->
+            <h4>[[store.address]]</h4>
+            <p>[[store.contact]]</p>
+          </div>
+          <md-button class="md-secondary md-icon-button" ng-click="do($event)" aria-label="call">
+            <md-icon class="material-icons">call</md-icon>
+          </md-button>
+        </md-list-item>
+        <md-divider ng-repeat-end></md-divider>
+      </md-list>
+</md-content>

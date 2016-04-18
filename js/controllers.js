@@ -1,4 +1,4 @@
-cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, $log,$location,Item){
+cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, $log,$location,Item,Store){
         $scope.master={};
     $scope.toggleMenu = buildDelayedToggler('left');
     $scope.closeMenu = function () {
@@ -8,7 +8,7 @@ cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, 
         });
     };
     $scope.menu=[
-        {name:"Home",active:false,icon:"home"},
+        {name:"Home",active:false,icon:"home",route:"/"},
         {name:"Account",active:false,icon:"account_box"},
         ];
     $scope.navigate=function(item){
@@ -58,13 +58,18 @@ cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, 
     $scope.master.navigateTo = function(route){
         $location.path(route);
     };
+    $scope.master.triggerCall = function(number){
+        document.location.href = 'tel:' + number
+    }
     $scope.master.itemQuerySearch = function(searchText){
         if($location.path!=='/search/item')
             $scope.master.navigateTo('/search/item');
         return Item.query({searchText:searchText}); 
     };
     $scope.master.selectedItemChange=function(item){
-        
+        $scope.master.stores=Store.query({item:item},function(){
+            $scope.master.navigateTo('/search/result')
+        })
     };
 });
 cartalogue.controller('HomeController', function ($scope, $timeout, $mdSidenav, $log) {
@@ -74,7 +79,7 @@ cartalogue.controller('HomeController', function ($scope, $timeout, $mdSidenav, 
     };
     var map;
     var blue_dot = 'https://www.google.com/support/enterprise/static/geo/cdate/art/dots/blue_dot.png';
-    var currentLocation = new google.maps.Marker({
+    var currentLocationMarker = new google.maps.Marker({
     map: map,
     icon: blue_dot
     });
@@ -84,14 +89,14 @@ cartalogue.controller('HomeController', function ($scope, $timeout, $mdSidenav, 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
+            $scope.master.currentLocation = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
-            currentLocation.setPosition(pos);
-            // infoWindow.setPosition(pos);
+            currentLocationMarker.setPosition($scope.master.currentLocation);
+            // infoWindow.setPosition($scope.master.currentLocation);
             // infoWindow.setContent('found.');
-            map.setCenter(pos);
+            map.setCenter($scope.master.currentLocation);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
@@ -105,7 +110,7 @@ cartalogue.controller('HomeController', function ($scope, $timeout, $mdSidenav, 
           center: {lat: -34.397, lng: 150.644},
           zoom: 16
         });
-        currentLocation.setMap(map);
+        currentLocationMarker.setMap(map);
         infoWindow = new google.maps.InfoWindow({map: map});
         $scope.goToCurrentLocation();
     }
@@ -126,5 +131,89 @@ cartalogue.controller('SearchItemController', function ($scope,Item,Store) {
     });
 });
 cartalogue.controller('SearchResultController',function($scope,Item,Store){
-    
+    document.activeElement.blur();
+    $scope.open_state=50;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: $scope.master.currentLocation,
+          zoom: 12
+        });
+        // currentLocationMarker.setMap(map);
+        infoWindow = new google.maps.InfoWindow({map: map});
+    }
+    function setMarkers(){
+        for(var i in $scope.master.stores){
+            new google.maps.Marker({
+                position: $scope.master.stores[i].location,
+                map: map,
+                title: $scope.master.stores[i].reg_no
+              });
+            
+        }
+        navigator.geolocation.getCurrentPosition(function(position) {
+            $scope.master.currentLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            // currentLocationMarker.setPosition(pos);
+            // infoWindow.setPosition(pos);
+            // infoWindow.setContent('found.');
+            map.setCenter($scope.master.currentLocation);
+            map.setZoom(12)
+          });
+    }
+    initMap();
+    setMarkers();
 });
+
+cartalogue.controller('StoreController',function($scope,$routeParams,Store){
+    $scope.store = Store.get({id:$routeParams.id},function(){
+        console.log($scope.store);
+    })
+    $scope.master.searchItemClass="hide";
+    
+})
+cartalogue.controller('DirectionsController',function($scope,$routeParams){
+    $scope.master.searchItemClass="hide";
+
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    var map;
+
+    function initialize() {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        $scope.master.currentLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        var mapOptions = {
+            zoom:12,
+            center: $scope.master.currentLocation
+        }
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        directionsDisplay.setMap(map);
+        calcRoute();
+
+      });
+        
+    }
+    
+    function calcRoute() {
+        
+        var start = $scope.master.currentLocation;
+        var end = {lat:Number($routeParams.lat),lng:Number($routeParams.lng)}
+        var request = {
+        origin:start,
+        destination:end,
+        travelMode: google.maps.TravelMode.DRIVING
+        };
+        directionsService.route(request, function(result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(result);
+            }
+        });
+    }
+    initialize();
+})
