@@ -1,104 +1,101 @@
-<html lang="en" >
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Angular Material style sheet -->
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
-        <title>Cartalogue</title>
-        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" type="text/css" href="css/main.css">
-    
-        <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnwRQ4j9fQItOOC-gA4je-KElXA-l-FLU"></script>
-        <!-- Angular Material requires Angular.js Libraries -->
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-resource.js"></script>
-        
-        <script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
+<html lang="en">
 
-        <!-- Angular Material Library -->
-        <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <title>Cartalogue</title>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 
-        
-    </head>
-    <body ng-app="cartalogue" ng-cloak ng-controller="MasterController">
-        <div layout="column" class="full-height" ng-cloak>
-            <section layout="row" flex>
-                <md-sidenav ng-cloak class="md-sidenav-left"  md-component-id="left" md-disable-backdrop md-whiteframe="4" md-swipe-left="closeMenu()">
-                    <md-toolbar class="md-theme-indigo">
-                        <h1 class="md-toolbar-tools" layout-row>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnwRQ4j9fQItOOC-gA4je-KElXA-l-FLU"></script>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-resource.js"></script>
+
+    <script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+
+</head>
+
+<body ng-app="cartalogue" ng-cloak ng-controller="MasterController">
+    <div layout="column" class="full-height" ng-cloak>
+        <section layout="row" flex>
+            <md-sidenav ng-cloak class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4" md-swipe-left="closeMenu()">
+                <md-toolbar class="md-theme-indigo">
+                    <h1 class="md-toolbar-tools" layout-row>
                             <span>Menu</span>
                             <span flex></span>
                             <md-button ng-click="closeMenu()">
                               <md-icon class="material-icons">keyboard_arrow_left</md-icon>
                             </md-button>
                         </h1>
-                    </md-toolbar>
-                     <md-divider></md-divider>
-                    <md-content ng-cloak>
-                        <md-list flex >
-                            <md-list-item ng-repeat="item in menu" ng-click="master.navigateTo(item.route)" ng-class="{'md-primary':item.active}">
-                              <md-icon class="material-icons md-avatar-icon" >[[item.icon]]</md-icon>
-                              
-                              <div class="md-list-item-text md-offset">
+                </md-toolbar>
+                <md-divider></md-divider>
+                <md-content ng-cloak>
+                    <md-list flex>
+                        <md-list-item ng-repeat="item in menu" ng-click="master.navigateTo(item.route)" ng-class="{'md-primary':item.active}">
+                            <md-icon class="material-icons md-avatar-icon">[[item.icon]]</md-icon>
+
+                            <div class="md-list-item-text md-offset">
                                 <h3 class="no-margin"> [[item.name]] </h3>
-                              </div>
-                            </md-list-item>
-                        </md-list>
-                    </md-content>
-                </md-sidenav>
-                <md-content flex md-swipe-right="toggleMenu()" ng-cloak>
-                    <md-toolbar>
-                        <div class="md-toolbar-tools">
-                            <md-button ng-click="toggleMenu()" >
-                                <md-icon class="material-icons">menu</md-icon>
-                            </md-button>
-                            <h2>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+            </md-sidenav>
+            <md-content flex md-swipe-right="toggleMenu()" ng-cloak>
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <md-button ng-click="toggleMenu()">
+                            <md-icon class="material-icons">menu</md-icon>
+                        </md-button>
+                        <h2>
                               <span>Cartalogue</span>
                             </h2>
-                        </div>
-                    </md-toolbar>
-                    <ng-view ng-cloak layout="column" layout-wrap></ng-view>
-                    <div class="fab-input" ng-class="master.searchItemClass" layout="row" >
-                        <md-card flex="100" layout-padding>
-                            <!--<md-input-container md-no-float class="md-block">-->
-                            <!--    <input placeholder="Search item" ng-focus="master.onSearchItemFocus()" ng-model="master.itemQuery">-->
-                            <!--</md-input-container>-->
-                             <md-autocomplete md-selected-item="master.selectedItem"
-                              md-search-text="master.searchText"
-                              md-items="item in master.itemQuerySearch(master.searchText)"
-                              md-selected-item-change="master.selectedItemChange(item)"
-                              md-item-text="item.name"
-                              md-min-length="0"
-                              placeholder="Search for items"
-                              >
+                    </div>
+                </md-toolbar>
+                <ng-view ng-cloak layout="column" layout-wrap></ng-view>
+                <div class="fab-input" ng-class="master.searchItemClass" layout="row">
+                    <md-card flex="100" layout-padding>
+                        <!--<md-input-container md-no-float class="md-block">-->
+                        <!--    <input placeholder="Search item" ng-focus="master.onSearchItemFocus()" ng-model="master.itemQuery">-->
+                        <!--</md-input-container>-->
+                        <md-autocomplete md-selected-item="master.selectedItem" md-search-text="master.searchText" md-items="item in master.itemQuerySearch(master.searchText)" md-selected-item-change="master.selectedItemChange(item)" md-item-text="item.name" md-min-length="0"
+                        placeholder="Search for items">
                             <md-item-template ng-focus="master.onSearchItemFocus()">
-                              <span md-highlight-text="master.searchText" md-highlight-flags="^i">[[item.name]]</span>
+                                <span md-highlight-text="master.searchText" md-highlight-flags="^i">[[item.name]]</span>
                             </md-item-template>
                             <md-not-found>
-                              No states matching "[[master.searchText]]" were found.
-                              <a ng-click="">Request item</a>
+                                No states matching "[[master.searchText]]" were found.
+                                <a ng-click="">Request item</a>
                             </md-not-found>
-                          </md-autocomplete>
-                        </md-card>
-                    </div>
-                </md-content>
-            </section>
-        </div>
-                
-        <!-- Application bootstrap  -->
-        
+                        </md-autocomplete>
+                    </md-card>
+                </div>
+            </md-content>
+        </section>
+    </div>
 
-        <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/resources.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/routes.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/controllers.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/services.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+    <!-- Application bootstrap  -->
 
-    </body>
+
+    <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/resources.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/routes.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/controllers.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/services.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+
 </html>

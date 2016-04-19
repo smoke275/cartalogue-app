@@ -1,3 +1,4 @@
+/*global cartalogue */
 var API_ROOT = '/cartalogue-app/dummyapi/';
 cartalogue.factory('Item', ['$resource',
   function($resource){
