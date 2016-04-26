@@ -1,0 +1,32 @@
+ <md-content layout="column" layout-padding>
+
+    <form name="userForm" ng-submit="update()" layout="row"  layout-wrap layout-align="start start">
+    
+        <md-input-container flex="100">
+            <label>Name</label>
+            <input ng-model="master.store.name">
+        </md-input-container>
+        <md-input-container flex="100">
+            <label>Address</label>
+            <input ng-model="master.store.address" type="text">
+        </md-input-container>
+       
+        <md-input-container flex="100">
+            <label>Contact</label>
+            <input ng-model="master.store.contact" type="contact">
+        </md-input-container>
+        
+        <md-input-container flex="100">
+            <label>Registration number</label>
+            <input ng-model="master.store.reg_number" type="contact">
+        </md-input-container>
+         <md-input-container flex="100">
+          <div ngf-drop ngf-select ng-model="master.store.image_url" class="drop-box" ngf-drag-over-class="dragover">Click to upload image</div>
+		    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+			<img width='100%' ngf-src="master.store.image_url[0]" ng-if="master.store.image_url[0]">
+			<img width='100%' ng-src="https://cartalogue-shinjanxp.c9users.io/api[[master.store.image_url]]" ng-if="master.store.image_url">
+        </md-input-container>
+        <div id="map" class="location-picker" flex="100" style="height:50%"></div>
+        <md-button class="md-raised md-primary" type="submit" flex>Save</md-button>
+    </form>
+  </md-content>

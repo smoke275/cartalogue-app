@@ -1,6 +1,18 @@
 #map {
 height: calc(100% - 64px);
+position:relative;
 }
+#loading-overlay{
+    
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background-color:rgba(0,0,0,0.5);
+    z-index:1000;
+}
+
 md-list-item.md-primary, md-list-item.md-primary md-icon{
     color:rgb(76,175,80)
 }
@@ -69,4 +81,24 @@ body{
 md-card-content.md-primary{
     background-color:rgb(0,188,212);
     color:white;
+}
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 65px;
+    text-align: center;
+    padding-top: 10px;
+    margin: 10px;
+}
+#map.location-picker::after{
+    content:"";
+    position: absolute;
+    width:100%;
+    height:100%;
+    background-image:url('../images/ic_pin_drop_black_24px.svg');
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-size:50px 50px;
+    pointer-events:none;
 }

@@ -1,6 +1,30 @@
-cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, $log,$location,Item,Store){
+/*global cartalogue*/
+function onSuccessToast($mdToast,message){
+    message = message || "Success";
+    $mdToast.show(
+      $mdToast.simple()
+        .content(message)
+        .position('bottom right')
+        .hideDelay(2000)
+    );
+}
+function onErrorToast($mdToast,message){
+    message = message || "Error";
+    $mdToast.show(
+      $mdToast.simple()
+        .content(message)
+        .position('bottom right')
+        .hideDelay(2000)
+    );
+}
+
+cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, $log,$location,Item,Store,User,Tag){
         $scope.master={};
     $scope.toggleMenu = buildDelayedToggler('left');
+    $scope.logout = function(){
+      localStorage.removeItem('satellizer_token');
+      $scope.master.navigateTo('/')
+    }
     $scope.closeMenu = function () {
       $mdSidenav('left').close()
         .then(function () {
@@ -9,6 +33,10 @@ cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, 
     };
     $scope.menu=[
         {name:"Home",active:false,icon:"home",route:"/"},
+        {name:"Seller",active:false,icon:"shop",route:"/seller"},
+        {name:"Inventory",active:false,icon:"shopping_basket",route:"/item/list"},
+        {name:"Request List",active:false,icon:"dns",route:"/itemrequest/list"},
+        {name:"Request",active:false,icon:"add_shopping_cart",route:"/itemrequest"},
         {name:"Account",active:false,icon:"account_box"},
         ];
     $scope.navigate=function(item){
@@ -56,6 +84,7 @@ cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, 
       };
     }
     $scope.master.navigateTo = function(route){
+        $scope.closeMenu()
         $location.path(route);
     };
     $scope.master.triggerCall = function(number){
@@ -66,11 +95,25 @@ cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, 
             $scope.master.navigateTo('/search/item');
         return Item.query({searchText:searchText}); 
     };
+    $scope.master.tagQuerySearch = function(searchText){
+        var tags= Tag.query({searchText:searchText},function(){
+          console.log(tags);
+        }); 
+        return tags;
+    };
     $scope.master.selectedItemChange=function(item){
-        $scope.master.stores=Store.query({item:item},function(){
+        $scope.master.stores=Store.query({item:item.id},function(){
             $scope.master.navigateTo('/search/result')
         })
     };
+    
+    $scope.master.login_required = function(){
+        User.get({"do":"verify"},function(){
+          console.log("Logged in");
+        },function(){
+          $scope.master.navigateTo('/login');
+        })
+    }
 });
 cartalogue.controller('HomeController', function ($scope, $timeout, $mdSidenav, $log) {
     $scope.master.searchItemClass="fab-input-bottom";
@@ -124,6 +167,41 @@ cartalogue.controller('HomeController', function ($scope, $timeout, $mdSidenav, 
     initMap();
     
   });
+cartalogue.controller('RegisterController',function($scope,$http,$auth,User){
+  $scope.master.searchItemClass='hide';
+  
+  $scope.register = function(){
+    $auth.signup($scope.user)
+    .then(function(response) {
+      // Redirect user here to login page or perhaps some other intermediate page
+      // that requires email address verification before any other part of the site
+      // can be accessed.
+      $scope.master.navigateTo('/login')
+    })
+    .catch(function(response) {
+      // Handle errors here.
+    });
+   
+  }
+});
+cartalogue.controller('LoginController',function($scope,$window,$http,$location,$auth,User){
+  $scope.master.searchItemClass='hide';
+    $scope.login=function(){
+      $auth.login($scope.user)
+    .then(function(response) {
+      // Redirect user here after a successful log in.
+      $scope.master.navigateTo('/')
+    })
+    .catch(function(response) {
+      // Handle errors here, such as displaying a notification
+      // for invalid email and/or password.
+    });
+    }
+});
+
+
+
+// Customer controllers
 cartalogue.controller('SearchItemController', function ($scope,Item,Store) {
     $scope.master.searchItemClass="";
     $scope.stores=Store.query(function(){
@@ -142,11 +220,11 @@ cartalogue.controller('SearchResultController',function($scope,Item,Store){
         infoWindow = new google.maps.InfoWindow({map: map});
     }
     function setMarkers(){
-        for(var i in $scope.master.stores){
+        for(var i=0;i<$scope.master.stores.length;i++){
             new google.maps.Marker({
                 position: $scope.master.stores[i].location,
                 map: map,
-                title: $scope.master.stores[i].reg_no
+                title: $scope.master.stores[i].name
               });
             
         }
@@ -165,7 +243,6 @@ cartalogue.controller('SearchResultController',function($scope,Item,Store){
     initMap();
     setMarkers();
 });
-
 cartalogue.controller('StoreController',function($scope,$routeParams,Store){
     $scope.store = Store.get({id:$routeParams.id},function(){
         console.log($scope.store);
@@ -216,4 +293,167 @@ cartalogue.controller('DirectionsController',function($scope,$routeParams){
         });
     }
     initialize();
+});
+
+
+
+// Seller controllers
+cartalogue.controller('SellerController',function($scope,$routeParams,Store,FileUpload){
+  $scope.master.login_required();
+  $scope.master.searchItemClass='hide';
+  $scope.master.store = Store.get({'id':'my'});
+  
+  $scope.update = function(){
+    $scope.master.store.location={
+      "lat":map.getCenter().lat(),
+      "lng":map.getCenter().lng()
+    }
+    if(angular.isArray($scope.master.store.image_url) && $scope.master.store.image_url[0] instanceof File){
+        FileUpload.save($scope.master.store.image_url[0]).then(
+            function(data){
+               	$scope.master.store.image_url = data.data;
+                $scope.master.store.$save(function(){console.log("success")}); 
+            },function(){console.log("Error")});
+    }
+    else{ 
+        $scope.master.store.$save(function(){console.log('Success')},function(){console.log("error")}); 
+    }
+    // Store.update({id:$scope.master.store.id},$scope.master.store,function(response){
+    //   console.log(response)
+    // });
+  }
+  var map;
+    var blue_dot = 'https://www.google.com/support/enterprise/static/geo/cdate/art/dots/blue_dot.png';
+    var currentLocationMarker = new google.maps.Marker({
+    map: map,
+    icon: blue_dot
+    });
+    var infoWindow;
+    $scope.goToCurrentLocation = function(){
+        
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            $scope.master.currentLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            currentLocationMarker.setPosition($scope.master.currentLocation);
+            // infoWindow.setPosition($scope.master.currentLocation);
+            // infoWindow.setContent('found.');
+            map.setCenter($scope.master.currentLocation);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+    }
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 16
+        });
+        currentLocationMarker.setMap(map);
+        infoWindow = new google.maps.InfoWindow({map: map});
+        $scope.goToCurrentLocation();
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+    }
+    initMap();
+});
+cartalogue.controller('ItemListController',function($scope,$routeParams,Store,Item){
+  $scope.master.login_required();
+  $scope.master.store = Store.get({'id':'my'},function(){
+      $scope.items = Item.query({'store':$scope.master.store.id})
+  });
+  $scope.master.searchItemClass='hide';
+  $scope.delete =function(item){
+    Item.delete(item,function(){
+       $scope.items = Item.query({'store':$scope.master.store.id})
+    })
+  }
+
+  // console.log($scope.items)
 })
+cartalogue.controller('ItemUpdateController',function($scope,$routeParams,Store,Item,Tag){
+  $scope.master.login_required()
+  $scope.master.searchItemClass='hide';
+
+  $scope.item = Item.get({id:$routeParams.id});
+  $scope.update = function(){
+    
+    for (i in $scope.item.tags){
+      $scope.item.tags[i] = $scope.item.tags[i].id;
+    }
+    if(angular.isArray($scope.item.image_url) && $scope.item.image_url[0] instanceof File){
+        FileUpload.save($scope.item.image_url[0]).then(
+            function(data){
+                $scope.item.image_url = data.data;
+                Item.save($scope.item,function(){console.log("success")
+                  $scope.master.navigateTo('/item/list')
+                }); 
+            },function(){console.log("Error")});
+    }
+    else{ 
+        Item.save($scope.item,function(){console.log('Success')
+          $scope.master.navigateTo('/item/list')
+        },function(){console.log("error")}); 
+    }
+  }
+})
+cartalogue.controller('ItemAddController',function($scope,$routeParams,Store,Item,FileUpload){
+  $scope.master.login_required();
+  $scope.master.searchItemClass='hide';
+  if(!angular.isArray($scope.item.tags))
+  $scope.item.tags=[];
+  $scope.update = function(){
+    console.log("New item adding")
+    for (i in $scope.item.tags){
+      $scope.item.tags[i] = $scope.item.tags[i].id;
+    }
+    if(angular.isArray($scope.item.image_url) && $scope.item.image_url[0] instanceof File){
+        FileUpload.save($scope.item.image_url[0]).then(
+            function(data){
+                $scope.item.image_url = data.data;
+                Item.save($scope.item,function(){console.log("success")
+                  $scope.master.navigateTo('/item/list')
+                }); 
+            },function(){console.log("Error")});
+    }
+    else{ 
+        Item.save($scope.item,function(){console.log('Success')
+          $scope.master.navigateTo('/item/list')
+        },function(){console.log("error")}); 
+    }
+  }
+})
+cartalogue.controller('ItemRequestController',function($scope,$routeParams,Store,ItemRequest,Tag){
+  $scope.master.login_required();
+  $scope.master.searchItemClass='hide';
+  $scope.item = {};
+  $scope.item.tags=[];
+  $scope.request = function(){
+    console.log("New item request")
+    for (i in $scope.item.tags){
+      $scope.item.tags[i] = $scope.item.tags[i].id;
+    }
+     
+        ItemRequest.save($scope.item,function(){console.log('Success')
+          $scope.master.navigateTo('/item/list')
+        },function(){console.log("error")}); 
+    
+  }
+})
+
+cartalogue.controller('ItemRequestListController',function($scope,$routeParams,ItemRequest){
+    $scope.master.login_required();
+  $scope.master.searchItemClass='hide';
+  $scope.itemrequests = ItemRequest.query({"mode":"seller"});
+});

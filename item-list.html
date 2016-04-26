@@ -1,0 +1,21 @@
+<md-content flex="100" class="transition-slow">
+<md-list >
+        <md-subheader class="md-no-sticky" >Items inventory
+        </md-subheader>
+        <md-list-item class="md-2-line" ng-repeat-start="item in items" flex="100" ng-click="master.navigateTo('/item/'+item.id)">
+          <img ng-src="https://cartalogue-shinjanxp.c9users.io/api[[item.image_url]]" class="md-avatar" alt="[[item.name]]" />
+          <div class="md-list-item-text" layout="column">
+            <!--<h3>[[store.reg_no]]</h3>-->
+            <h4>[[item.name]]</h4>
+            <p>[[item.price]]</p>
+          </div>
+          <md-button class="md-secondary md-icon-button" ng-click="delete(item)" aria-label="call">
+            <md-icon class="material-icons">delete</md-icon>
+          </md-button>
+        </md-list-item>
+        <md-divider ng-repeat-end></md-divider>
+</md-list>
+<md-button class="md-fab md-accent fab-bottom-right" aria-label="Get current location" ng-click="master.navigateTo('/item/add')">
+    <md-icon class="material-icons">add</md-icon>
+</md-button>
+</md-content>

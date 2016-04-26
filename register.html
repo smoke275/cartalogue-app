@@ -1,0 +1,40 @@
+ <md-content layout="column" layout-padding>
+
+    <form name="userForm" ng-submit="register()" layout="row"  layout-wrap layout-align="start start">
+            <p>Already have an account? <a href="#/login">Login</a></p>
+
+        <md-input-container flex="100">
+            <label>Name</label>
+            <input ng-model="user.name" required>
+        </md-input-container>
+        <md-input-container flex="100">
+            <label>Email</label>
+            <input ng-model="user.email" type="email" required>
+        </md-input-container>
+        <md-input-container flex="100">
+            <label>Password</label>
+            <input ng-model="user.password" type="password" required>
+        </md-input-container>
+        <md-input-container flex="100">
+            <label>Confirm Password</label>
+            <input ng-model="user.password_confirmation" type="password" required>
+        </md-input-container>
+        <md-input-container flex="100">
+            <label>Contact</label>
+            <input ng-model="user.contact" type="contact" required>
+        </md-input-container>
+        <md-input-container flex="100">
+            <label>Address</label>
+            <input ng-model="user.address" type="address" required>
+          </md-input-container>
+        <p>Choose primary account type</p>
+        <md-radio-group ng-model="user.type" flex="100" required>
+            <md-radio-button value="customer">Customer</md-radio-button>
+            <md-radio-button value="seller"> Seller </md-radio-button>
+        </md-radio-group>
+
+ 
+        <md-button class="md-raised md-primary" type="submit" flex>Register</md-button>
+        
+    </form>
+  </md-content>

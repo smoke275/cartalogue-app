@@ -5,8 +5,8 @@
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     <title>Cartalogue</title>
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
     <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript" charset="utf-8"></script>
@@ -19,7 +19,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-resource.js"></script>
 
-    <script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
+    <!--<script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/satellizer/0.14.0/satellizer.min.js"></script>
+    <script type="text/javascript" src="plugins/ng-file-upload/ng-file-upload-shim.min.js"></script>
+    <script type="text/javascript" src="plugins/ng-file-upload/ng-file-upload.min.js"></script>
 
     <!-- Angular Material Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
@@ -28,6 +31,11 @@
 </head>
 
 <body ng-app="cartalogue" ng-cloak ng-controller="MasterController">
+    
+    <div id="loading-overlay" layout="row" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate" md-diameter="200px"></md-progress-circular>
+    </div>
+    
     <div layout="column" class="full-height" ng-cloak>
         <section layout="row" flex>
             <md-sidenav ng-cloak class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4" md-swipe-left="closeMenu()">
@@ -53,7 +61,7 @@
                     </md-list>
                 </md-content>
             </md-sidenav>
-            <md-content flex md-swipe-right="toggleMenu()" ng-cloak>
+            <md-content flex  ng-cloak>
                 <md-toolbar>
                     <div class="md-toolbar-tools">
                         <md-button ng-click="toggleMenu()">
@@ -70,14 +78,20 @@
                         <!--<md-input-container md-no-float class="md-block">-->
                         <!--    <input placeholder="Search item" ng-focus="master.onSearchItemFocus()" ng-model="master.itemQuery">-->
                         <!--</md-input-container>-->
-                        <md-autocomplete md-selected-item="master.selectedItem" md-search-text="master.searchText" md-items="item in master.itemQuerySearch(master.searchText)" md-selected-item-change="master.selectedItemChange(item)" md-item-text="item.name" md-min-length="0"
+                        <md-autocomplete 
+                        md-selected-item="master.selectedItem" 
+                        md-search-text="master.searchText" 
+                        md-items="item in master.itemQuerySearch(master.searchText)" 
+                        md-selected-item-change="master.selectedItemChange(item)" 
+                        md-item-text="item.name" 
+                        md-min-length="0"
                         placeholder="Search for items">
                             <md-item-template ng-focus="master.onSearchItemFocus()">
                                 <span md-highlight-text="master.searchText" md-highlight-flags="^i">[[item.name]]</span>
                             </md-item-template>
                             <md-not-found>
-                                No states matching "[[master.searchText]]" were found.
-                                <a ng-click="">Request item</a>
+                                No items matching "[[master.searchText]]" were found.
+                                <md-button ng-click="">Request item</md-button>
                             </md-not-found>
                         </md-autocomplete>
                     </md-card>

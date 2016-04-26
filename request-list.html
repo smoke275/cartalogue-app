@@ -1,0 +1,16 @@
+<md-content flex="100" class="transition-slow">
+<md-list >
+        <md-subheader class="md-no-sticky" >Item Requests
+        </md-subheader>
+        <md-list-item class="md-2-line" ng-repeat-start="itemrequest in itemrequests" flex="100">
+          <div class="md-list-item-text" layout="column">
+            <!--<h3>[[store.reg_no]]</h3>-->
+            <h4>[[itemrequest.name]]</h4>
+             
+          </div>
+          
+        </md-list-item>
+        <md-divider ng-repeat-end></md-divider>
+</md-list>
+
+</md-content>

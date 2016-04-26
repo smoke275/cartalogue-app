@@ -1,0 +1,29 @@
+ <md-content layout="column" layout-padding>
+
+    <form name="userForm" ng-submit="request()" layout="row"  layout-wrap layout-align="start start">
+    
+        <md-input-container flex="100">
+            <label>Name</label>
+            <input ng-model="item.name">
+        </md-input-container>
+
+        <md-chips ng-model="item.tags" md-autocomplete-snap
+              md-require-match="false">
+          <md-autocomplete
+              md-selected-item="selectedItem"
+              md-search-text="searchText"
+              md-items="tag in master.tagQuerySearch(searchText)"
+              md-item-text="tag.name"
+              placeholder="Add some tags">
+            <span md-highlight-text="searchText">[[tag.name]]</span>
+          </md-autocomplete>
+          <md-chip-template>
+            <span>
+              <strong>[[$chip.name]]</strong>
+            </span>
+          </md-chip-template>
+        </md-chips>
+
+        <md-button class="md-raised md-primary" type="submit" flex>Save</md-button>
+    </form>
+  </md-content>
