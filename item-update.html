@@ -52,8 +52,8 @@
          <md-input-container flex="100">
           <div ngf-drop ngf-select ng-model="item.image_url" class="drop-box" ngf-drag-over-class="dragover">Click to upload image</div>
 		    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
-			<img width='100%' ngf-src="item.image_url[0]" ng-if="item.image_url[0]">
-			<img width='100%' ng-src="https://cartalogue-shinjanxp.c9users.io/api[[item.image_url]]" ng-if="item.image_url">
+			<img class="img-holder" ngf-src="item.image_url[0]" ng-if="item.image_url[0]">
+			<img class="img-holder" ng-src="https://cartalogue-shinjanxp.c9users.io/api[[item.image_url]]" ng-if="item.image_url">
         </md-input-container>
         <md-button class="md-raised md-primary" type="submit" flex>Save</md-button>
     </form>

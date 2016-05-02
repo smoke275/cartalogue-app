@@ -167,7 +167,7 @@ cartalogue.controller('HomeController', function ($scope, $timeout, $mdSidenav, 
     initMap();
     
   });
-cartalogue.controller('RegisterController',function($scope,$http,$auth,User){
+cartalogue.controller('RegisterController',function($scope,$http,$auth,$mdToast,User){
   $scope.master.searchItemClass='hide';
   
   $scope.register = function(){
@@ -382,7 +382,7 @@ cartalogue.controller('ItemListController',function($scope,$routeParams,Store,It
 
   // console.log($scope.items)
 })
-cartalogue.controller('ItemUpdateController',function($scope,$routeParams,Store,Item,Tag){
+cartalogue.controller('ItemUpdateController',function($scope,$routeParams,Store,Item,Tag,FileUpload){
   $scope.master.login_required()
   $scope.master.searchItemClass='hide';
 
@@ -395,6 +395,7 @@ cartalogue.controller('ItemUpdateController',function($scope,$routeParams,Store,
     if(angular.isArray($scope.item.image_url) && $scope.item.image_url[0] instanceof File){
         FileUpload.save($scope.item.image_url[0]).then(
             function(data){
+              console.log(data);
                 $scope.item.image_url = data.data;
                 Item.save($scope.item,function(){console.log("success")
                   $scope.master.navigateTo('/item/list')
@@ -411,6 +412,7 @@ cartalogue.controller('ItemUpdateController',function($scope,$routeParams,Store,
 cartalogue.controller('ItemAddController',function($scope,$routeParams,Store,Item,FileUpload){
   $scope.master.login_required();
   $scope.master.searchItemClass='hide';
+  $scope.item={};
   if(!angular.isArray($scope.item.tags))
   $scope.item.tags=[];
   $scope.update = function(){
@@ -446,7 +448,7 @@ cartalogue.controller('ItemRequestController',function($scope,$routeParams,Store
     }
      
         ItemRequest.save($scope.item,function(){console.log('Success')
-          $scope.master.navigateTo('/item/list')
+          $scope.master.navigateTo('/')
         },function(){console.log("error")}); 
     
   }

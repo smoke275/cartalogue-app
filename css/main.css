@@ -102,3 +102,8 @@ md-card-content.md-primary{
     background-size:50px 50px;
     pointer-events:none;
 }
+img{
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+}
