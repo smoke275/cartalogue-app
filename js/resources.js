@@ -51,3 +51,7 @@ cartalogue.factory('User', ['$resource',
   function($resource){
     return $resource(API_ROOT+'auth/:do', {do:'@do'});
   }]);
+cartalogue.factory('DeviceToken', ['$resource',
+  function($resource){
+    return $resource(API_ROOT+'deviceToken');
+  }]);

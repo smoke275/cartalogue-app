@@ -55,6 +55,10 @@ cartalogue.config(['$routeProvider',
 			templateUrl: 'login.html',
 			controller: 'LoginController'
 		}).
+		when('/logout',{
+			templateUrl: 'login.html',
+			controller: 'LogoutController'
+		}).
 		when('/home',{
 			templateUrl: 'home.html',
 			controller: 'HomeController'

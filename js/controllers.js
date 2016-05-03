@@ -21,8 +21,9 @@ function onErrorToast($mdToast,message){
 cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, $log,$location,Item,Store,User,Tag){
         $scope.master={};
     $scope.toggleMenu = buildDelayedToggler('left');
-    $scope.logout = function(){
+    $scope.master.logout = function(){
       localStorage.removeItem('satellizer_token');
+      window.plugins.toast.showShortBottom('Logout Successful');  
       $scope.master.navigateTo('/')
     }
     $scope.closeMenu = function () {
@@ -37,7 +38,7 @@ cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, 
         {name:"Inventory",active:false,icon:"shopping_basket",route:"/item/list"},
         {name:"Request List",active:false,icon:"dns",route:"/itemrequest/list"},
         {name:"Request",active:false,icon:"add_shopping_cart",route:"/itemrequest"},
-        {name:"Account",active:false,icon:"account_box"},
+        {name:"Logout",active:false,icon:"account_box",route:"/logout"},
         ];
     $scope.navigate=function(item){
         for(i in $scope.menu){
@@ -184,22 +185,29 @@ cartalogue.controller('RegisterController',function($scope,$http,$auth,$mdToast,
    
   }
 });
-cartalogue.controller('LoginController',function($scope,$window,$http,$location,$auth,User){
+cartalogue.controller('LoginController',function($scope,$window,$http,$location,$auth,User,DeviceToken){
   $scope.master.searchItemClass='hide';
     $scope.login=function(){
       $auth.login($scope.user)
     .then(function(response) {
       // Redirect user here after a successful log in.
+      window.plugins.toast.showShortBottom('Login Successful')
+      DeviceToken.save({'device_token':localStorage.getItem('device_token')},function(){
+      })
       $scope.master.navigateTo('/')
     })
     .catch(function(response) {
       // Handle errors here, such as displaying a notification
       // for invalid email and/or password.
+      window.plugins.toast.showShortBottom(JSON.stringify(response));
     });
     }
 });
 
-
+cartalogue.controller('LogoutController',function($scope){
+  $scope.master.searchItemClass='hide';
+  $scope.master.logout();
+});
 
 // Customer controllers
 cartalogue.controller('SearchItemController', function ($scope,Item,Store) {
