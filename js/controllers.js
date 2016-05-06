@@ -154,12 +154,16 @@ cartalogue.controller('HomeController', function ($scope, $timeout, $mdSidenav, 
           center: {lat: -34.397, lng: 150.644},
           zoom: 16
         });
+        setTimeout(function(){
+          google.maps.event.trigger(map, 'resize');
+          $scope.goToCurrentLocation();
+        },500);
         currentLocationMarker.setMap(map);
-        infoWindow = new google.maps.InfoWindow({map: map});
-        $scope.goToCurrentLocation();
+        
     }
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow = new google.maps.InfoWindow({map: map});
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
                               'Error: The Geolocation service failed.' :
@@ -224,8 +228,11 @@ cartalogue.controller('SearchResultController',function($scope,Item,Store){
           center: $scope.master.currentLocation,
           zoom: 12
         });
+        setTimeout(function(){
+          google.maps.event.trigger(map, 'resize'); 
+          setMarkers();
+        },500)
         // currentLocationMarker.setMap(map);
-        infoWindow = new google.maps.InfoWindow({map: map});
     }
     function setMarkers(){
         for(var i=0;i<$scope.master.stores.length;i++){
@@ -249,7 +256,7 @@ cartalogue.controller('SearchResultController',function($scope,Item,Store){
           });
     }
     initMap();
-    setMarkers();
+
 });
 cartalogue.controller('StoreController',function($scope,$routeParams,Store){
     $scope.store = Store.get({id:$routeParams.id},function(){
@@ -363,12 +370,16 @@ cartalogue.controller('SellerController',function($scope,$routeParams,Store,File
           center: {lat: -34.397, lng: 150.644},
           zoom: 16
         });
-        currentLocationMarker.setMap(map);
-        infoWindow = new google.maps.InfoWindow({map: map});
-        $scope.goToCurrentLocation();
+        setTimeout(function(){
+          google.maps.event.trigger(map, 'resize');
+          currentLocationMarker.setMap(map);
+          $scope.goToCurrentLocation();
+        },500)
+        
     }
 
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {   
+      infoWindow = new google.maps.InfoWindow({map: map});
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
                               'Error: The Geolocation service failed.' :
