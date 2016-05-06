@@ -21,6 +21,24 @@ function onErrorToast($mdToast,message){
 cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, $log,$location,Item,Store,User,Tag){
         $scope.master={};
     $scope.toggleMenu = buildDelayedToggler('left');
+    $scope.master.account_mode = localStorage.getItem('account_mode') || 'customer';
+    $scope.master.toggle_account_mode = function(){
+      if($scope.master.account_mode=='seller')
+        localStorage.setItem('account_mode',"customer");
+      else
+        localStorage.setItem('account_mode',"seller");
+      
+      $scope.master.account_mode = localStorage.getItem('account_mode');
+      $scope.initMenu();
+    }
+    
+    $scope.master.logged_in = function(){
+      if(localStorage.getItem('satellizer_token')==null)
+        return false;
+      else
+        return true;
+    }
+    
     $scope.master.logout = function(){
       localStorage.removeItem('satellizer_token');
       window.plugins.toast.showShortBottom('Logout Successful');  
@@ -32,14 +50,28 @@ cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, 
           $log.debug("closed menu");
         });
     };
-    $scope.menu=[
-        {name:"Home",active:false,icon:"home",route:"/"},
-        {name:"Seller",active:false,icon:"shop",route:"/seller"},
-        {name:"Inventory",active:false,icon:"shopping_basket",route:"/item/list"},
-        {name:"Request List",active:false,icon:"dns",route:"/itemrequest/list"},
-        {name:"Request",active:false,icon:"add_shopping_cart",route:"/itemrequest"},
-        {name:"Logout",active:false,icon:"account_box",route:"/logout"},
-        ];
+    $scope.initMenu = function(){
+          if($scope.master.account_mode=='customer'){
+          $scope.menu=[
+              {name:"Home",active:false,icon:"home",route:"/"},
+              {name:"Request",active:false,icon:"add_shopping_cart",route:"/itemrequest"},
+              ];
+        }
+        else if($scope.master.account_mode=='seller'){
+          $scope.menu=[
+              {name:"Home",active:false,icon:"home",route:"/"},
+              {name:"Seller",active:false,icon:"shop",route:"/seller"},
+              {name:"Inventory",active:false,icon:"shopping_basket",route:"/item/list"},
+              {name:"Request List",active:false,icon:"dns",route:"/itemrequest/list"},
+              ];
+        }
+        //check login status then push Login or Logout button
+        if($scope.master.logged_in())
+          $scope.menu.push({name:"Logout",active:false,icon:"account_box",route:"/logout"})
+        else
+          $scope.menu.push({name:"Login",active:false,icon:"account_box",route:"/login"})
+    }
+    $scope.initMenu();
     $scope.navigate=function(item){
         for(i in $scope.menu){
             $scope.menu[i].active=false;
@@ -176,6 +208,7 @@ cartalogue.controller('RegisterController',function($scope,$http,$auth,$mdToast,
   $scope.master.searchItemClass='hide';
   
   $scope.register = function(){
+    localStorage.setItem('account_mode',$scope.user.type);
     $auth.signup($scope.user)
     .then(function(response) {
       // Redirect user here to login page or perhaps some other intermediate page
