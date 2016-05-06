@@ -458,7 +458,7 @@ cartalogue.controller('ItemRequestController',function($scope,$routeParams,Store
         ItemRequest.save($scope.item,function(){console.log('Success')
           window.plugins.toast.showShortBottom('Item request Successful');
           $scope.master.navigateTo('/')
-        },function(response){console.log("error :"}); 
+        },function(response){console.log("error :")}); 
     
   }
 })
