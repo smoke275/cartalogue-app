@@ -235,6 +235,9 @@ cartalogue.controller('SearchResultController',function($scope,Item,Store){
         // currentLocationMarker.setMap(map);
     }
     function setMarkers(){
+      var centre={
+        lat:0.0,lng:0.0
+      }
         for(var i=0;i<$scope.master.stores.length;i++){
             new google.maps.Marker({
                 position: $scope.master.stores[i].location,
@@ -242,7 +245,11 @@ cartalogue.controller('SearchResultController',function($scope,Item,Store){
                 title: $scope.master.stores[i].name
               });
             
+            centre.lat+= $scope.master.stores[i].location.lat;
+            centre.lng+= $scope.master.stores[i].location.lng;
         }
+        centre.lat = centre.lat/$scope.master.stores.length;
+        centre.lng = centre.lng/$scope.master.stores.length;
         navigator.geolocation.getCurrentPosition(function(position) {
             $scope.master.currentLocation = {
               lat: position.coords.latitude,
@@ -251,7 +258,7 @@ cartalogue.controller('SearchResultController',function($scope,Item,Store){
             // currentLocationMarker.setPosition(pos);
             // infoWindow.setPosition(pos);
             // infoWindow.setContent('found.');
-            map.setCenter($scope.master.currentLocation);
+            map.setCenter(centre);
             map.setZoom(12)
           });
     }
