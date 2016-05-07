@@ -29,7 +29,7 @@ cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, 
         localStorage.setItem('account_mode',"seller");
       
       $scope.master.account_mode = localStorage.getItem('account_mode');
-      $scope.initMenu();
+      $scope.master.initMenu();
     }
     
     $scope.master.logged_in = function(){
@@ -42,6 +42,7 @@ cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, 
     $scope.master.logout = function(){
       localStorage.removeItem('satellizer_token');
       window.plugins.toast.showShortBottom('Logout Successful');  
+      $scope.
       $scope.master.navigateTo('/')
     }
     $scope.closeMenu = function () {
@@ -50,7 +51,7 @@ cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, 
           $log.debug("closed menu");
         });
     };
-    $scope.initMenu = function(){
+    $scope.master.initMenu = function(){
           if($scope.master.account_mode=='customer'){
           $scope.menu=[
               {name:"Home",active:false,icon:"home",route:"/"},
@@ -71,7 +72,7 @@ cartalogue.controller("MasterController",function($scope, $timeout, $mdSidenav, 
         else
           $scope.menu.push({name:"Login",active:false,icon:"account_box",route:"/login"})
     }
-    $scope.initMenu();
+    $scope.master.initMenu();
     $scope.navigate=function(item){
         for(i in $scope.menu){
             $scope.menu[i].active=false;
@@ -229,6 +230,7 @@ cartalogue.controller('LoginController',function($scope,$window,$http,$location,
     .then(function(response) {
       // Redirect user here after a successful log in.
       window.plugins.toast.showShortBottom('Login Successful')
+      $scope.master.initMenu();
       DeviceToken.save({'device_token':localStorage.getItem('device_token')},function(){
       })
       $scope.master.navigateTo('/')
