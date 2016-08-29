@@ -51,7 +51,7 @@ cartalogue.config(function($interpolateProvider) {
       // On response failture
       responseError: function (rejection) {
         // console.log(rejection); // Contains the data about the error.
-        $('#loading-overlay').hide();
+        $('#loading-overlay').addClass('hide');
         // Return the promise rejection.
         return $q.reject(rejection);
       }
